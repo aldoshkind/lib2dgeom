@@ -12,6 +12,16 @@
 {
 	theta = atan2((B.y - A.y), (B.x - A.x)) + M_PI / 2;
 	rho = A.x * cos(theta) + A.y * sin(theta);
+	if(theta < 0.0)
+	{
+		theta += M_PI;
+		rho = -rho;
+	}
+	if(theta > M_PI)
+	{
+		theta -= M_PI;
+		rho = -rho;
+	}
 }
 
 /*destructor*/ line2::~line2()
@@ -36,11 +46,11 @@ vector2d line2::intersection(const line2 &l)
 
 	if(c < d)
 	{
-		res.x = (res.y * sin(theta) - rho) / cos(theta);
+		res.x = -(res.y * sin(theta) - rho) / cos(theta);
 	}
 	else
 	{
-		res.x = (res.y * sin(l.theta) - l.rho) / cos(l.theta);
+		res.x = -(res.y * sin(l.theta) - l.rho) / cos(l.theta);
 	}
 
 	return res;
